@@ -33,9 +33,12 @@ namespace CRUD_SanPham
         }
         [Test]
         [TestCase("5", "SP5", "XeDap", 100.6f, "Đỏ", "3m", 20)]//Mã duy nhất
+        [TestCase("10", "SP10", "XeMay", float.MaxValue, "Trắng", "3m", 99)]//Biên
         public void ThemSP_Maduynhat(string id, string maSanPham, string tenSanPham, float gia, string mauSac, string kichThuoc, int soluong)
         {
             _sp = new SanPham("6", "SP5", "XYZ", 100.6f, "Đỏ", "3m", 20);
+            CRUD.Them(_sp);
+            _sp = new SanPham(id, maSanPham, tenSanPham, gia, mauSac, kichThuoc, soluong);
             CRUD.Them(_sp);
             Assert.Throws<Exception>(() => CRUD.Them(_sp));
         }
@@ -53,12 +56,12 @@ namespace CRUD_SanPham
         [Test]
         [TestCase("SP3")]
         [TestCase("1")]
-        public void XoaSP(string masp)
+        public void XoaSP(string id)
         {
             //_sp = new SanPham("1", masp, "Samsung", 1000.0f, "Black", "Large", 10);
             _sp = new SanPham("1", "SP3", "Samsung", 1000.0f, "Black", "Large", 10);
             CRUD.Them(_sp);
-            CRUD.Xoa(masp);
+            CRUD.Xoa(id);
             Assert.That(CRUD.DanhSach().Contains(_sp), Is.False);
         }
         public class SanPham
